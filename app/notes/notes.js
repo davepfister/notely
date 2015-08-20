@@ -29,12 +29,24 @@ var nevernoteBasePath = 'https://nevernote-1150.herokuapp.com/api/v1/',
       }
     };
 
+    $scope.buttonText = function (){
+      if ($scope.note.id) {
+        return "Update Note";
+      } else {
+        return "Create Note";
+      }
+    };
+
     self.cloneNote = function(note) {
       return JSON.parse(JSON.stringify(note));
     };
 
     $scope.commit = function() {
+      if ($scope.note.id) {
+          NotesBackend.putNote($scope.note, self.assignNotes);
+      } else {
       NotesBackend.postNote($scope.note, self.assignNotes);
+    }
     };
 
     $scope.hasNotes = function() {
